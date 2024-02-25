@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars24 - Car Enquiry Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #000000, #808080, #ffffff);
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .car-categories {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .car-category img {
+            width: 800px;
+            border-radius: 5px;
+        }
+
+        .car-category h2 {
+            color: #333;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .car-images {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+       
+    </style>
+</head>
+
+<body ng-app="carEnquiryApp" ng-controller="carEnquiryController">
+    <header>
+        <h1>Cars24</h1>
+        <div class="car-categories">
+            <div class="car-category">
+                <img src="1643728-3840x2160-desktop-4k-bmw-8-series-background-image.jpg" alt="Sports Cars">
+                <h2>Sports Cars</h2>
+            </div>
+            <div class="car-category">
+                <img src="NOVITEC F81Comp Pic01.jpg" alt="Super Cars">
+                <h2>Super Cars</h2>
+            </div>
+            <div class="car-category">
+                <img src="rh_huayrabc-67.jpg" alt="Hyper Cars">
+                <h2>Hyper Cars</h2>
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <h1>Car Enquiry Registration</h1>
+        <form name="enquiryForm" ng-submit="submitEnquiry()" novalidate>
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" ng-model="enquiry.fullName" required>
+            <span class="error" ng-show="enquiryForm.fullName.$error.required && enquiryForm.fullName.$dirty">Full name is required.</span>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" ng-model="enquiry.email" required>
+            <span class="error" ng-show="enquiryForm.email.$error.required && enquiryForm.email.$dirty">Email is required.</span>
+            <span class="error" ng-show="enquiryForm.email.$error.email && enquiryForm.email.$dirty">Invalid email address.</span>
+            <br>
+            <label for="carModel">Car Model:</label>
+            <select id="carModel" name="carModel" ng-model="enquiry.carModel" required>
+                <option value="">Select Car Model</option>
+                <option value="Sports Cars">Sports Cars</option>
+                <option value="Super Cars">Super Cars</option>
+                <option value="Hyper Cars">Hyper Cars</option>
+            </select>
+            <span class="error" ng-show="enquiryForm.carModel.$error.required && enquiryForm.carModel.$dirty">Car model is required.</span>
+            <br>
+            <input type="submit" value="Submit Enquiry">
+        </form>
+        <div ng-show="enquirySubmitted">
+            <h2>Thank you for your enquiry, {{ enquiry.fullName }}!</h2>
+            <p>We will contact you soon regarding your interest in {{ enquiry.carModel }}.</p>
+        </div>
+        
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        angular.module('carEnquiryApp', [])
+            .controller('carEnquiryController', function ($scope) {
+                $scope.enquiry = {};
+                $scope.enquirySubmitted = false;
+
+                $scope.submitEnquiry = function () {
+                    if ($scope.enquiryForm.$valid) {
+                        // Simulate submitting enquiry (e.g., sending data to server)
+                        // Here, we'll just mark it as submitted and reset the form
+                        $scope.enquirySubmitted = true;
+                        $scope.enquiry = {};
+                        $scope.enquiryForm.$setPristine();
+                        $scope.enquiryForm.$setUntouched();
+                    }
+                };
+            });
+    </script>
+</body>
+
+</html>
